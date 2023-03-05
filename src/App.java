@@ -3,7 +3,7 @@ public class App
     public static void main(String[] args) throws Exception 
     {
 
-        spellchecker spellcheck = new spellchecker();
+        Spellchecker spellcheck = new Spellchecker();
 
         spellcheck.WordIsInSet("only"); //test
     }
