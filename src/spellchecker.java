@@ -11,7 +11,7 @@ public class Spellchecker
     public Spellchecker()
     {
         this.words = new HashSet<>();
-        this.FillSet();
+        this.FillSet(); 
     }
 
     //this is a helper function used only to populate new instances of the spellchecker hashset with the words.txt wordlist
@@ -51,5 +51,11 @@ public class Spellchecker
             System.out.println("word not found");
             return false;
         }
+    }
+
+    public void SwapAdjacent()
+    {
+        //check if the given word is a match for any word in the wordlsit if adjacent characters
+        //are swapped to account for potential mispellings
     }
 }
