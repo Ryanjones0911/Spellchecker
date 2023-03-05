@@ -3,12 +3,12 @@ import java.io.FileNotFoundException;
 import java.util.HashSet;
 import java.util.Scanner;
 
-public class spellchecker 
+public class Spellchecker 
 {
     private HashSet<String> words = new HashSet<>();
 
     //we do this to make sure every instance of the spellchecker object has a new hashset with the words from words.txt initialized and available for use
-    public spellchecker()
+    public Spellchecker()
     {
         this.words = new HashSet<>();
         this.FillSet();
