@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.HashSet;
 import java.util.Scanner;
 
-public class Spellchecker 
+public class Spellchecker
 {
     private HashSet<String> words = new HashSet<>();
 
