@@ -34,7 +34,7 @@ public class Spellchecker
         } 
         catch (FileNotFoundException e) 
         {
-            System.err.println("Error: file not found");
+            System.err.println("Error: file not found: " + e.getMessage());
             System.exit(1);
         }         
     }
