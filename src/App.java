@@ -5,6 +5,6 @@ public class App
 
         Spellchecker spellcheck = new Spellchecker();
 
-        spellcheck.WordIsInSet("only");
+        spellcheck.Spellcheck("only");
     }
 }

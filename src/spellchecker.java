@@ -5,12 +5,12 @@ import java.util.Scanner;
 
 public class Spellchecker
 {
-    private HashSet<String> words = new HashSet<>();
+    private HashSet<String> wordset = new HashSet<>();
 
     //we do this to make sure every instance of the spellchecker object has a new hashset with the words from words.txt initialized and available for use
     public Spellchecker()
     {
-        this.words = new HashSet<>();
+        this.wordset = new HashSet<>();
         this.FillSet(); 
     }
 
@@ -27,7 +27,7 @@ public class Spellchecker
             while(iterate.hasNextLine())
             {
                 String data = iterate.nextLine();
-                words.add(data);
+                wordset.add(data);
             }
 
             iterate.close();
@@ -39,23 +39,37 @@ public class Spellchecker
         }         
     }
 
+
+    //performs a Spell Check on the string s with respect to the set of words, W. If s is in W, then the call to spellCheck(s) returns an iterable
+    //collection that contains only s, since it is assumed to be spelled correctly in this case. Otherwise, if s is not in W, then the call to 
+    //spellCheck(s) returns a list of every word in W that could be a correct spelling of s
+    public void Spellcheck(String word)
+    {
+        //call WordIsInSet to see if the word matches exactly with anything in the set. If there is no match...
+        if(!WordIsInSet(word))
+        {
+            //...check if the given word is a match for any word in the wordlsit if adjacent characters
+            //are swapped to account for potential mispellings
+
+            
+
+        }
+
+
+    }
+
     public boolean WordIsInSet(String word)
     {
-        if(words.contains(word))
+        if(wordset.contains(word))
         {
             System.out.println("word found");
             return true;
         }
         else
         {
+            //here only for testing
             System.out.println("word not found");
             return false;
         }
-    }
-
-    public void SwapAdjacent()
-    {
-        //check if the given word is a match for any word in the wordlsit if adjacent characters
-        //are swapped to account for potential mispellings
     }
 }
