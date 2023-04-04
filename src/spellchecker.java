@@ -20,7 +20,7 @@ public class Spellchecker
         //try catch block to input content of words.txt to our hashset. Throws an error if the file cannot be found.
         try 
         {
-            File wordlist = new File("resources/words.txt"); 
+            File wordlist = new File("Spellchecker/resources/words.txt"); 
             Scanner iterate = new Scanner(wordlist);
 
             //opens words.txt and adds every line as a new entry in the hashset
@@ -51,10 +51,38 @@ public class Spellchecker
             //...check if the given word is a match for any word in the wordlsit if adjacent characters
             //are swapped to account for potential mispellings
 
-            
+            AdjacentSwap(word);
 
+            //..check if inserting a character in bewteen adjacent characters results in a match
+            SingleCharInsertion(word);
+
+            //..check if deleting a character in bewteen adjacent characters results in a match
+            SingleCharDelete(word);
+
+            //check if replacing a char in the word with another char results in a match
+            ReplaceChar(word);
         }
 
+
+    }
+
+    private void ReplaceChar(String word) 
+    {
+
+    }
+
+    private void SingleCharDelete(String word) 
+    {
+
+    }
+
+    private void SingleCharInsertion(String word)
+    {
+
+    }
+
+    private void AdjacentSwap(String word) 
+    {
 
     }
 
