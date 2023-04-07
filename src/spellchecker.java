@@ -20,7 +20,7 @@ public class Spellchecker
         //try catch block to input content of words.txt to our hashset. Throws an error if the file cannot be found.
         try 
         {
-            File wordlist = new File("Spellchecker/resources/words.txt"); 
+            File wordlist = new File("resources/words.txt"); 
             Scanner iterate = new Scanner(wordlist);
 
             //opens words.txt and adds every line as a new entry in the hashset
@@ -62,8 +62,6 @@ public class Spellchecker
             //check if replacing a char in the word with another char results in a match
             ReplaceChar(word);
         }
-
-
     }
 
     private void ReplaceChar(String word) 
@@ -81,9 +79,32 @@ public class Spellchecker
 
     }
 
-    private void AdjacentSwap(String word) 
+    private boolean AdjacentSwap(String word) 
     {
+        //time complexity of this algo is O(n^2), and given the task it is performing I'm not sure it's possible to reduce it further.
+        //we run through the swap, which is an O(n-1) operation, but we necessarily have to compare each resulting word against our hashset.
+        //this check is also O(n) as it involves the creation of a new string. O((n-1) * n) = O(n^2)
+        char[] charArray = word.toCharArray();
 
+        //swap each adjacent characters and call spellcheck. If never true, there are no adjacent misspellings. otherwise return true for found word
+        for(int i = 0; i < word.length() - 1; i++)
+        {
+            char temp = charArray[i];
+            charArray[i] = charArray[i+1];
+            charArray[i + 1] = temp;
+
+            if (WordIsInSet(new String(charArray)))
+            {
+                return true;
+            }
+            else
+            {
+                //this is important as you have to reset the word to its original state. Otherwise it will continue to shift characters
+                //of the new word you've created, and not the one you're intending to use.
+                charArray = word.toCharArray();
+            }
+        }
+        return false;
     }
 
     public boolean WordIsInSet(String word)
@@ -96,7 +117,7 @@ public class Spellchecker
         else
         {
             //here only for testing
-            System.out.println("word not found");
+           System.out.println("word not found");
             return false;
         }
     }
