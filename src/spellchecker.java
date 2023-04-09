@@ -66,17 +66,20 @@ public class Spellchecker
 
     private void ReplaceChar(String word) 
     {
-
+        //iterate through char array and replace each letter with every other letter in the alphabet
+        //and see if the resulting word results in a match
     }
 
     private void SingleCharDelete(String word) 
     {
-
+        //iterate through char array and delete each letter to see if the resulting word minus the deleted letter
+        //results in a match
     }
 
     private void SingleCharInsertion(String word)
     {
-
+        //iterate through char array and basically just test for each character in the alphabet inserted between every letter
+        //to see if there's a match
     }
 
     private boolean AdjacentSwap(String word) 
