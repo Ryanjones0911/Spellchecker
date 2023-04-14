@@ -5,6 +5,6 @@ public class App
 
         Spellchecker spellcheck = new Spellchecker();
 
-        spellcheck.Spellcheck("urposes");
+        System.out.println(spellcheck.Spellcheck("hermal")); 
     }
 }

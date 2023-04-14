@@ -1,7 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
 
@@ -45,8 +44,9 @@ public class Spellchecker
     //performs a Spell Check on the string s with respect to the set of words, W. If s is in W, then the call to spellCheck(s) returns an iterable
     //collection that contains only s, since it is assumed to be spelled correctly in this case. Otherwise, if s is not in W, then the call to 
     //spellCheck(s) returns a list of every word in W that could be a correct spelling of s
-    public void Spellcheck(String word)
+    public ArrayList<String> Spellcheck(String word)
     {
+        ArrayList<String> results = new ArrayList<>();
         System.out.println("Now testing for direct match:");
 
         //call WordIsInSet to see if the word matches exactly with anything in the set. If there is no match...
@@ -55,26 +55,25 @@ public class Spellchecker
             //...check if the given word is a match for any word in the wordlsit if adjacent characters
             //are swapped to account for potential mispellings
             System.out.println("now testing Adjacent Swap:");
-            if (!AdjacentSwap(word))
-            {
-                System.out.println("now testing Single Char Insertion:");
-                //..check if inserting a character in bewteen adjacent characters results in a match
-                if (!SingleCharInsertion(word))
-                {
-                    System.out.println("now testing Single Char Delete:");
-                    //..check if deleting a character in bewteen adjacent characters results in a match
-                    if(!SingleCharDelete(word))
-                    {
-                        System.out.println("now testing Replace Char:");
-                        //check if replacing a char in the word with another char results in a match
-                        if(!ReplaceChar(word))
-                        {
-                            System.out.println("No possible matches");
-                        }
-                    }
-                }
-            }
+            AdjacentSwap(word);
+            
+            System.out.println("now testing Single Char Insertion:");
+            //..check if inserting a character in bewteen adjacent characters results in a match
+            SingleCharInsertion(word);
+                
+            System.out.println("now testing Single Char Delete:");
+            //..check if deleting a character in bewteen adjacent characters results in a match
+            SingleCharDelete(word);
+                    
+            System.out.println("now testing Replace Char:");
+            //check if replacing a char in the word with another char results in a match
+            ReplaceChar(word);
         }
+        else
+        {
+            results.add(word);
+        }
+        return results;
     }
 
     private boolean ReplaceChar(String word) 
@@ -87,7 +86,32 @@ public class Spellchecker
     private boolean SingleCharDelete(String word) 
     {
         //iterate through char array and delete each letter to see if the resulting word minus the deleted letter
-        //results in a match
+        //results in a match. same logic as charinsertion, just without the alphabet. O(n^2)
+
+        char[] charArray = word.toCharArray();
+        ArrayList<Character> characters = new ArrayList<>();
+        for(char c : charArray)
+        {
+            characters.add(c);
+        }
+       
+        for(int i = 0; i <= word.length(); i++)
+        {
+            characters.remove(i);
+
+            if(WordIsInSet(arrayListToString(characters)))
+            {
+                return true;
+            }
+            else
+            {
+                characters.clear();
+                for(char c : charArray)
+                {
+                    characters.add(c);
+                }
+            }
+        }
         return false;
     }
 
@@ -112,7 +136,6 @@ public class Spellchecker
             for(char j = 'a'; j <= 'z'; j++)
             {
                 characters.add(i, j);
-                System.out.println("Word being tested: " + characters.toString());
 
                 if(WordIsInSet(arrayListToString(characters)))
                 {
@@ -175,6 +198,8 @@ public class Spellchecker
     }
 
     private String arrayListToString(ArrayList<Character> list)
+    //this is just a helper function that will convert an arraylist to a proper string like you would
+    //expect to see from a word.
     {
         StringBuilder sb = new StringBuilder();
         for(char c : list)
@@ -185,5 +210,3 @@ public class Spellchecker
         return result;
     }
 }
-
-
