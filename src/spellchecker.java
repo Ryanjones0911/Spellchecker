@@ -80,6 +80,34 @@ public class Spellchecker
     {
         //iterate through char array and replace each letter with every other letter in the alphabet
         //and see if the resulting word results in a match
+
+        char[] charArray = word.toCharArray();
+        ArrayList<Character> characters = new ArrayList<>();
+        for(char c : charArray)
+        {
+            characters.add(c);
+        }
+       
+        for(int i = 0; i <= word.length(); i++)
+        {
+            for(char j = 'a'; j <= 'z'; j++)
+            {
+                characters.set(i, j);
+
+                if(WordIsInSet(arrayListToString(characters)))
+                {
+                    return true;
+                }
+                else
+                {
+                    characters.clear();
+                    for(char c : charArray)
+                    {
+                        characters.add(c);
+                    }
+                }
+            }
+        }
         return false;
     }
 
