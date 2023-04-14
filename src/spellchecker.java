@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 
+//This spellchecker is currently set to check against the words_alpha.txt dictionary found here: https://github.com/dwyl/english-words
+
 public class Spellchecker
 {
     private HashSet<String> wordset = new HashSet<>();
@@ -55,19 +57,19 @@ public class Spellchecker
             //...check if the given word is a match for any word in the wordlsit if adjacent characters
             //are swapped to account for potential mispellings
             System.out.println("now testing Adjacent Swap:");
-            AdjacentSwap(word);
+            results.addAll(AdjacentSwap(word));
             
             System.out.println("now testing Single Char Insertion:");
             //..check if inserting a character in bewteen adjacent characters results in a match
-            SingleCharInsertion(word);
+            results.addAll(SingleCharInsertion(word));
                 
             System.out.println("now testing Single Char Delete:");
             //..check if deleting a character in bewteen adjacent characters results in a match
-            SingleCharDelete(word);
+            results.addAll(SingleCharDelete(word));
                     
             System.out.println("now testing Replace Char:");
             //check if replacing a char in the word with another char results in a match
-            ReplaceChar(word);
+            results.addAll(ReplaceChar(word));
         }
         else
         {
@@ -76,19 +78,20 @@ public class Spellchecker
         return results;
     }
 
-    private boolean ReplaceChar(String word) 
+    private ArrayList<String> ReplaceChar(String word) 
     {
         //iterate through char array and replace each letter with every other letter in the alphabet
         //and see if the resulting word results in a match
 
         char[] charArray = word.toCharArray();
         ArrayList<Character> characters = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<>();
         for(char c : charArray)
         {
             characters.add(c);
         }
        
-        for(int i = 0; i <= word.length(); i++)
+        for(int i = 0; i < word.length(); i++)
         {
             for(char j = 'a'; j <= 'z'; j++)
             {
@@ -96,7 +99,8 @@ public class Spellchecker
 
                 if(WordIsInSet(arrayListToString(characters)))
                 {
-                    return true;
+                    result.add(arrayListToString(characters));
+                    break;
                 }
                 else
                 {
@@ -108,28 +112,30 @@ public class Spellchecker
                 }
             }
         }
-        return false;
+        return result;
     }
 
-    private boolean SingleCharDelete(String word) 
+    private ArrayList<String> SingleCharDelete(String word) 
     {
         //iterate through char array and delete each letter to see if the resulting word minus the deleted letter
         //results in a match. same logic as charinsertion, just without the alphabet. O(n^2)
 
         char[] charArray = word.toCharArray();
         ArrayList<Character> characters = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<>();
         for(char c : charArray)
         {
             characters.add(c);
         }
        
-        for(int i = 0; i <= word.length(); i++)
+        for(int i = 0; i < word.length(); i++)
         {
             characters.remove(i);
 
             if(WordIsInSet(arrayListToString(characters)))
             {
-                return true;
+                result.add(arrayListToString(characters));
+                break;
             }
             else
             {
@@ -140,10 +146,10 @@ public class Spellchecker
                 }
             }
         }
-        return false;
+        return result;
     }
 
-    private boolean SingleCharInsertion(String word)
+    private ArrayList<String> SingleCharInsertion(String word)
     {
         //iterate through char array and basically just test for each character in the alphabet inserted between every letter
         //to see if there's a match. Time complexity O(n^2 * 26). The 26 comes from the characters of the alphabet
@@ -154,6 +160,7 @@ public class Spellchecker
         //hence the need to cast it to an arraylist
         char[] charArray = word.toCharArray();
         ArrayList<Character> characters = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<>();
         for(char c : charArray)
         {
             characters.add(c);
@@ -167,7 +174,7 @@ public class Spellchecker
 
                 if(WordIsInSet(arrayListToString(characters)))
                 {
-                    return true;
+                    result.add(arrayListToString(characters));
                 }
                 else
                 {
@@ -179,15 +186,16 @@ public class Spellchecker
                 }
             }
         }
-        return false;
+        return result;
     }
     
-    private boolean AdjacentSwap(String word) 
+    private ArrayList<String> AdjacentSwap(String word) 
     {
         //time complexity of this algo is O(n^2), and given the task it is performing I'm not sure it's possible to reduce it further.
         //we run through the swap, which is an O(n-1) operation, but we necessarily have to compare each resulting word against our hashset.
         //this check is also O(n) as it involves the creation of a new string. O((n-1) * n) = O(n^2)
         char[] charArray = word.toCharArray();
+        ArrayList<String> result = new ArrayList<>();
 
         //swap each adjacent characters and call spellcheck. If never true, there are no adjacent misspellings. otherwise return true for found word
         for(int i = 0; i < word.length() - 1; i++)
@@ -198,7 +206,7 @@ public class Spellchecker
 
             if (WordIsInSet(new String(charArray)))
             {
-                return true;
+                result.add(new String(charArray));
             }
             else
             {
@@ -207,7 +215,7 @@ public class Spellchecker
                 charArray = word.toCharArray();
             }
         }
-        return false;
+        return result;
     }
 
     public boolean WordIsInSet(String word)
