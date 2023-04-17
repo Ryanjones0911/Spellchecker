@@ -5,6 +5,6 @@ public class App
 
         Spellchecker spellcheck = new Spellchecker();
 
-        System.out.println(spellcheck.Spellcheck("thsi")); 
+        System.out.println(spellcheck.Spellcheck("twash")); 
     }
 }

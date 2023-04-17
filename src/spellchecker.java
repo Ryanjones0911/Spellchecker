@@ -49,25 +49,20 @@ public class Spellchecker
     public ArrayList<String> Spellcheck(String word)
     {
         ArrayList<String> results = new ArrayList<>();
-        System.out.println("Now testing for direct match:");
 
         //call WordIsInSet to see if the word matches exactly with anything in the set. If there is no match...
         if(!WordIsInSet(word))
         {
             //...check if the given word is a match for any word in the wordlsit if adjacent characters
             //are swapped to account for potential mispellings
-            System.out.println("now testing Adjacent Swap:");
             results.addAll(AdjacentSwap(word));
             
-            System.out.println("now testing Single Char Insertion:");
             //..check if inserting a character in bewteen adjacent characters results in a match
             results.addAll(SingleCharInsertion(word));
                 
-            System.out.println("now testing Single Char Delete:");
             //..check if deleting a character in bewteen adjacent characters results in a match
             results.addAll(SingleCharDelete(word));
                     
-            System.out.println("now testing Replace Char:");
             //check if replacing a char in the word with another char results in a match
             results.addAll(ReplaceChar(word));
         }
@@ -222,13 +217,10 @@ public class Spellchecker
     {
         if(wordset.contains(word))
         {
-            System.out.println("word found");
             return true;
         }
         else
         {
-            //here only for testing
-           System.out.println("word not found");
             return false;
         }
     }
