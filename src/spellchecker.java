@@ -23,7 +23,7 @@ public class Spellchecker
         //try catch block to input content of words.txt to our hashset. Throws an error if the file cannot be found.
         try 
         {
-            File wordlist = new File("Spellchecker/resources/words.txt"); 
+            File wordlist = new File("resources/words.txt"); 
             Scanner iterate = new Scanner(wordlist);
 
             //opens words.txt and adds every line as a new entry in the hashset
