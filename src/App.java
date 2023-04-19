@@ -4,7 +4,8 @@ public class App
     {
 
         Spellchecker spellcheck = new Spellchecker();
+        System.out.println(spellcheck.Spellcheck("testnng"));
 
-        System.out.println(spellcheck.Spellcheck("dsek")); 
+       
     }
 }

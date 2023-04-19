@@ -1,19 +1,18 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Scanner;
 
 //This spellchecker is currently set to check against the words_alpha.txt dictionary found here: https://github.com/dwyl/english-words
 
 public class Spellchecker
 {
-    private HashSet<String> wordset = new HashSet<>();
+    private MyHashSet wordset = new MyHashSet();
 
     //we do this to make sure every instance of the spellchecker object has a new hashset with the words from words.txt initialized and available for use
     public Spellchecker()
     {
-        this.wordset = new HashSet<>();
+        this.wordset = new MyHashSet();
         this.FillSet(); 
     }
 
@@ -30,9 +29,8 @@ public class Spellchecker
             while(iterate.hasNextLine())
             {
                 String data = iterate.nextLine();
-                wordset.add(data);
+                wordset.AddData(data);
             }
-
             iterate.close();
         } 
         catch (FileNotFoundException e) 
@@ -95,7 +93,6 @@ public class Spellchecker
                 if(WordIsInSet(arrayListToString(characters)))
                 {
                     result.add(arrayListToString(characters));
-                    break;
                 }
                 else
                 {
@@ -130,7 +127,7 @@ public class Spellchecker
             if(WordIsInSet(arrayListToString(characters)))
             {
                 result.add(arrayListToString(characters));
-                break;
+
             }
             else
             {
@@ -215,7 +212,7 @@ public class Spellchecker
 
     public boolean WordIsInSet(String word)
     {
-        if(wordset.contains(word))
+        if(wordset.Contains(word))
         {
             return true;
         }
