@@ -1,6 +1,6 @@
 import java.util.LinkedList;
 
-//experimenting with designing & implementing my own hashset class. Intend to use modulus hashing with seperate chaining
+//I don't know if a custom hashset implementation was required, but doing it this way felt more in line with the spirit of the class
 /*
 * please note that as I know this will only be used for strings, I did not bother making it usable for other types. To do so would be
 * outside the scope of this project. If this were intended to be used for programs other than this one, I would have made it type generic

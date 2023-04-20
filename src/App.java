@@ -4,7 +4,7 @@ public class App
     {
 
         Spellchecker spellcheck = new Spellchecker();
-        System.out.println(spellcheck.Spellcheck("libray"));
+        System.out.println(spellcheck.Spellcheck("testin"));
 
        
     }
