@@ -9,7 +9,7 @@ import java.util.LinkedList;
 * seems outside the scope of this assignment. I have implemented those methods necessary for the function of this specific program.
 * 
 * 
-* 370105 entries in words.txt list.
+* 370105 entries in words_long.txt list.
 * 
 * hashkey = key (data being hashed) % number of available slots (or buckets)
 * 
