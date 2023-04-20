@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+
 //experimenting with designing & implementing my own hashset class. Intend to use modulus hashing with seperate chaining
 /*
 * please note that as I know this will only be used for strings, I did not bother making it usable for other types. To do so would be
@@ -17,13 +19,15 @@
 
 public class MyHashSet
 {
-    private String[] buckets;
+    //array of linked lists
+    private LinkedList<String>[] buckets;
 
     //under the assumption that we don't know how much data will be hashed, we initialize the array to be used by our hashset
     //with an arbitrary size at first. This can and will later be resized.
     public MyHashSet()
     {
-        this.buckets = new String[32];
+        this.buckets = new LinkedList[32];
+        for(int i = 0; i < buckets.length; i++);
     }
 
     public void AddData(String data)
@@ -40,9 +44,11 @@ public class MyHashSet
         int hash = HashData(stringAsNum);
 
         //insert data into the table at the index of hashkey
-        buckets[hash] = data;
-
-
+        if(buckets[hash] == null)
+        {
+            buckets[hash] = new LinkedList<>();
+        }
+        buckets[hash].add(data);
     }
 
     //checks if a given value already exists in the hashset
@@ -50,10 +56,13 @@ public class MyHashSet
     {
         int hash = HashData(StringNumValue(data));
         if(buckets[hash] != null)
-        {  
-            if(buckets[hash].equalsIgnoreCase(data))
+        {
+            for(int i = 0; i < buckets[hash].size(); i++)
             {
-                return true;
+                if(buckets[hash].get(i).equalsIgnoreCase(data))
+                {
+                    return true;
+                }
             }
         }
         return false;
@@ -74,16 +83,23 @@ public class MyHashSet
     //make a new array twice the size of the original and rehash all existing values into the new array.
     //NOTE: I don't like how this works as it kind of rewrites the AddData method, but I can't think of a way to
     //      make it play nice with it right now. I'll revist if I have time.
-    private String[] IncreaseSize(String[] buckets)
+    private LinkedList<String>[] IncreaseSize(LinkedList<String>[] buckets)
     {
-        String[] resized = new String[buckets.length * 2];
+        LinkedList<String>[] resized = new LinkedList[buckets.length * 2];
         for(int i = 0; i < buckets.length; i++)
         {
             if(buckets[i] != null)
             {
-                int stringAsNum = StringNumValue(buckets[i]);
-                int hash = HashData(stringAsNum);
-                resized[hash] = buckets[i];
+                for(int j = 0; j < buckets[i].size(); j++)
+                {
+                    int stringAsNum = StringNumValue(buckets[i].get(j));
+                    int hash = HashData(stringAsNum);
+                    if(resized[hash] == null)
+                    {
+                        resized[hash] = new LinkedList<>();
+                    }
+                    resized[hash].add(buckets[i].get(j));
+                }
             }
         }
         return resized;
@@ -110,7 +126,7 @@ public class MyHashSet
 
     //used to determine if the hash table needs to be resized. Counts & returns number of slots in table that have data.
     //if greater than half, indicates table needs to be resized
-    private int CountFilledSlots(String[] buckets)
+    private int CountFilledSlots(LinkedList<String>[] buckets)
     {
         int count = 0;
         for(int i = 0; i < buckets.length; i++)
